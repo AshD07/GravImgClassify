@@ -14,7 +14,7 @@ app.config["PREDICTIONS_CSV"] = os.path.join(app.root_path, "predictions.csv")
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 # Load the model
-model = load_model("app.py")
+model = load_model("CustomMod.keras")
 
 # Class names
 class_names = [
