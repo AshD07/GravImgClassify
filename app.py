@@ -1,17 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
 import csv
+import tempfile
+import shutil
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
-app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "static/uploads")
 app.config["PREDICTIONS_CSV"] = os.path.join(app.root_path, "predictions.csv")
-
-# Ensure the upload folder exists
-os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 # Load the model
 model = load_model("CustomMod.keras")
@@ -31,8 +29,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def preprocess_image(image_path, target_size=(120, 142)):
-    img = image.load_img(image_path, target_size=target_size)
+def preprocess_image(img, target_size=(120, 142)):
+    img = img.resize(target_size)
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
     img_array /= 255.0
@@ -55,28 +53,34 @@ def index():
         files = request.files.getlist("files")
         predictions = []
 
-        for file in files:
-            if file.filename == "":
-                flash("No selected file")
-                continue
+        # Use a temporary directory to store uploaded files
+        with tempfile.TemporaryDirectory() as temp_dir:
+            for file in files:
+                if file.filename == "":
+                    flash("No selected file")
+                    continue
 
-            if not allowed_file(file.filename):
-                flash(f"File '{file.filename}' is not a valid image. Please upload a valid image file.")
-                continue
-            
-            file_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-            file.save(file_path)
+                if not allowed_file(file.filename):
+                    flash(f"File '{file.filename}' is not a valid image. Please upload a valid image file.")
+                    continue
+                
+                file_path = os.path.join(temp_dir, file.filename)
+                file.save(file_path)
 
-            img_array = preprocess_image(file_path)
-            pred = model.predict(img_array)[0]
-            top_index = np.argmax(pred)
-            
-            predictions.append({
-                "image_name": file.filename,
-                "name": class_names[top_index],
-                "confidence": pred[top_index],
-                "image_url": url_for('uploaded_file', filename=file.filename)
-            })
+                # Load and preprocess the image
+                with image.load_img(file_path) as img:
+                    img_array = preprocess_image(img)
+                
+                # Make predictions
+                pred = model.predict(img_array)[0]
+                top_index = np.argmax(pred)
+                
+                predictions.append({
+                    "image_name": file.filename,
+                    "name": class_names[top_index],
+                    "confidence": pred[top_index],
+                    "image_url": None  # URL can be added if images need to be saved elsewhere
+                })
 
         save_predictions_to_csv(predictions)
         
@@ -84,13 +88,9 @@ def index():
 
     return render_template("index.html")
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
-
 @app.route('/download_predictions')
 def download_predictions():
-    return send_from_directory(app.root_path, "predictions.csv", as_attachment=True)
+    return send_file(app.config["PREDICTIONS_CSV"], as_attachment=True)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
