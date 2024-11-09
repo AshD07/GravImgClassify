@@ -182,26 +182,26 @@
                 <div class="image-preview-container" id="previewContainer"></div>
             </div>
 
-    <!-- Predictions Display Section -->
-    {% if predictions %}
-        <div class="mt-4 predictions-container">
-            <h3>Predictions:</h3>
-            {% for pred in predictions %}
-                <div class="prediction-item">
-                    <img src="{{ pred.image_url }}" alt="Uploaded Image" class="predicted-image">
-                    <div>
-                        <span class="class-name">{{ pred.name }}:</span>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: {{ pred.confidence * 100 }}%" aria-valuenow="{{ pred.confidence * 100 }}" aria-valuemin="0" aria-valuemax="100">{{ (pred.confidence * 100) | round(2) }}%</div>
-                        </div>
+ <!-- Predictions Display Section -->
+{% if predictions %}
+    <div class="mt-4 predictions-container">
+        <h3>Predictions:</h3>
+        {% for pred in predictions %}
+            <div class="prediction-item">
+                <img src="{{ url_for('static', filename=pred.image_url) }}" alt="Uploaded Image" class="predicted-image">
+                <div>
+                    <span class="class-name">{{ pred.name }}:</span>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ pred.confidence * 100 }}%" aria-valuenow="{{ pred.confidence * 100 }}" aria-valuemin="0" aria-valuemax="100">{{ (pred.confidence * 100) | round(2) }}%</div>
                     </div>
                 </div>
-            {% endfor %}
-            <div class="text-center mt-4">
-                <a href="{{ url_for('download_predictions') }}" class="btn btn-primary">Download Predictions as CSV</a>
             </div>
+        {% endfor %}
+        <div class="text-center mt-4">
+            <a href="{{ url_for('download_predictions') }}" class="btn btn-primary">Download Predictions as CSV</a>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
 </div>
 
         <!-- Info Tab with Background -->
