@@ -6,18 +6,8 @@ import os
 import csv
 import tensorflow as tf
 
-# Configure TensorFlow for GPU availability or fall back to CPU if needed
-try:
-    gpus = tf.config.list_physical_devices('GPU')
-    if gpus:
-        for gpu in gpus:
-            tf.config.experimental.set_memory_growth(gpu, True)
-        print("GPUs are available and configured.")
-    else:
-        print("No GPUs found, using CPU.")
-except Exception as e:
-    print(f"Error initializing GPUs: {e}, using CPU instead.")
-    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Force CPU usage
+# Force TensorFlow to use CPU only, avoiding GPU initialization errors
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # This line will ensure only CPU is used
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
