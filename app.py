@@ -4,10 +4,6 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
 import csv
-import tensorflow as tf
-
-# Force TensorFlow to use CPU only, avoiding GPU initialization errors
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # This line will ensure only CPU is used
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -18,7 +14,7 @@ app.config["PREDICTIONS_CSV"] = os.path.join(app.root_path, "predictions.csv")
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 # Load the model
-model = load_model("CustomMod.keras")
+model = load_model(r"C:/Users/diwan/Downloads/my_flask_app/CustomMod.keras")
 
 # Class names
 class_names = [
