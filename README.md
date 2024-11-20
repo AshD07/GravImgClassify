@@ -24,4 +24,5 @@ Introduction-
  patterns. A deep learning model is then trained on this data to di erentiate gravitational
  waves from noise. Finally, we evaluate the model's performance using metrics like accuracy,
  precision, recall, and F1-score, ensuring its reliability in identifying genuine signals.
+ 
 Tutorial video link:https://www.youtube.com/watch?v=UsQF3WmzSUo&t=9s
