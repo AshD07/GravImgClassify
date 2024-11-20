@@ -1,4 +1,4 @@
-Introduction
+Introduction-
  Gravitational wave detection has transformed astrophysics by enabling the observation of
  cosmic events such as black hole mergers and neutron star collisions. This project centers on
  classifying gravitational wave signals using advanced machine learning techniques, drawing
