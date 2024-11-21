@@ -9,11 +9,7 @@ This project aims to:
 1. **Preprocess data** to ensure balanced representation of each signal class.
 2. **Extract features** to highlight significant waveform patterns.
 3. **Train a deep learning model** to classify gravitational wave signals.
-4. **Evaluate the model's performance** using metrics such as:
-   - Accuracy
-   - Precision
-   - Recall
-   - F1-score
+4. **Evaluate the model's performance** using different classification metrics such as F1-Score, Precision, Recall, Accuracy.
 
 The ultimate goal is to develop a robust model capable of reliably distinguishing genuine gravitational wave signals from noise.
 
