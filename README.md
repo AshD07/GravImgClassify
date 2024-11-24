@@ -43,9 +43,17 @@ The project ensures the development of a reliable model that can assist in real-
 ## Full Video Tutorial on Setup and Web Application
 [![Gravitational Wave Detection Explained](https://img.youtube.com/vi/UsQF3WmzSUo/0.jpg)](https://www.youtube.com/watch?v=UsQF3WmzSUo&t=150s)
 
-## Contributions
-Contributions to the project are welcome. Feel free to raise issues or submit pull requests.
+## Contributors
+Here are the contributors of this project:-
 
+Guide:- 
+Rohan Shah (Spartificial)
+
+Team Members:-
+1. Ashutosh Diwan
+2. Aboli Bhandari
+3. Deeplaxmi Patre
+4. Khushi Dixit
 ---
 
 *Gravitational waves carry the secrets of the cosmos. By understanding them, we uncover the universe's most profound mysteries.*
