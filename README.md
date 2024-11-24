@@ -40,7 +40,7 @@ The **Gravity Spy Gravitational Waves dataset**, sourced from Kaggle, is central
 ## Results
 The project ensures the development of a reliable model that can assist in real-time detection and classification of gravitational wave signals with a whopping 97% accuracy, supporting advancements in astrophysics and gravitational wave astronomy.
 
-## Video Tutorial
+## Full Video Tutorial on Setup and Web Application
 [![Gravitational Wave Detection Explained](https://img.youtube.com/vi/UsQF3WmzSUo/0.jpg)](https://www.youtube.com/watch?v=UsQF3WmzSUo&t=150s)
 
 ## Contributions
